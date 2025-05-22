@@ -10,7 +10,7 @@ const Statistics = ({good, neutral, bad}) => {
     return ( all > 0 ? (
         <div>
             <h1>Statistics</h1>
-            <p></p>
+            <table>
             <StatisticLine text="Good" value={good}></StatisticLine>
             <StatisticLine text="Neutral" value={neutral}></StatisticLine>
             <StatisticLine text="Bad" value={bad}></StatisticLine>
@@ -18,6 +18,7 @@ const Statistics = ({good, neutral, bad}) => {
             <StatisticLine text="All" value={all}></StatisticLine>
             <StatisticLine text="Average" value={average}></StatisticLine>
             <StatisticLine text="Positive" value={positive}></StatisticLine>
+            </table>
         </div>) : (
             <div>
             <h1>Statistics</h1>
