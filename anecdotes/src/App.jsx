@@ -12,7 +12,13 @@ const App = () => {
     'The only way to go fast, is to go well.'
   ]
 
-  const [selected, setSelected] = useState(0)
+
+  const generateAleatorio = () => {
+    return (Math.floor(Math.random() * anecdotes.length))
+  }
+
+
+  const [selected, setSelected] = useState(generateAleatorio())
 
   const [votes, setVotes] = useState(Array(anecdotes.length).fill(0))
 
@@ -23,8 +29,8 @@ const App = () => {
     copy[selected] += 1
     setVotes(copy)
 
-    const maxIndex = copy.indexOf(Math.max(...copy))
-    setMax(maxIndex)
+    //const maxIndex = copy.indexOf(Math.max(...copy))
+    //setMax(maxIndex)
   }
 
   return (
@@ -33,13 +39,13 @@ const App = () => {
       <p>{anecdotes[selected]}</p>
       <p>Has {votes[selected]} votes</p>
       <button onClick={handleVote}>Vote</button>
-      <button onClick={()=>setSelected(Math.floor(Math.random() * anecdotes.length))}>Random Anecdote</button>
+      <button onClick={() => setSelected(generateAleatorio())}>Random Anecdote</button>
       <p></p>
       <h1>Anecdote With Most Votes</h1>
-      <p>{anecdotes[max]}</p>
-      <p>Has {votes[max]} votes</p>
+      <p>{anecdotes[votes.indexOf(Math.max(...votes))]}</p>
+      <p>Has {Math.max(...votes)} votes</p>
     </div>
-)
+  )
 }
 
 export default App

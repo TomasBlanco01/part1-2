@@ -1,7 +1,7 @@
 const Part = ({ parts, exercises }) => {
     return (
         <div>
-            <p>{parts} tiene: {exercises}</p>
+            <p>{parts}: {exercises}</p>
         </div>
     )
 }
