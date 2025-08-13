@@ -8,7 +8,8 @@ const App = () => {
 
   const handlePersons = (event) => {
     event.preventDefault()
-    if (newName.trim() === '') return
+    if (newName.trim() === '') return setNewName('')
+    if (persons.some((person) => (person.name == newName))) return alert(`${newName} is already added to phonebook`)
     setPersons([...persons, { name: newName }])
     setNewName('')
   }
