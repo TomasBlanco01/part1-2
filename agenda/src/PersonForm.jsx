@@ -1,6 +1,6 @@
 import { useState } from 'react'
 
-const PersonForm = ({ persons, setPersons}) => {
+const PersonForm = ({ persons, addPerson }) => {
     const [newName, setNewName] = useState('')
     const [newNumber, setNewNumber] = useState('')
 
@@ -22,7 +22,7 @@ const PersonForm = ({ persons, setPersons}) => {
             setNewNumber('')
             return
         }
-        setPersons([...persons, { name: newName, number: newNumber }])
+        addPerson({ name: newName, number: newNumber })
         setNewName('')
         setNewNumber('')
     }
