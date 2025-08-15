@@ -32,9 +32,18 @@ const App = () => {
   const deletePerson = (personId, personName) => {
     if (window.confirm(`Delete ${personName} ?`)) {
     noteService.remove(personId)
-      .then(response => setPersons(persons.filter(p => p.id !== personId)))
+      .then(() => setPersons(persons.filter(p => p.id !== personId)))
       .catch(error => console.error('Error deleting person:', error));
     }
+  };
+
+  const updateNumber = (personId, newNumber) => {
+    const person = persons.find(p => p.id === personId)
+    const updatedPerson = { ...person, number: newNumber }
+
+    noteService.update(personId, newNumber)
+      .then((response) => setPersons(persons.map(p => p.id !== personId ? p : response.data)))
+      .catch(error => console.error('Error updating person:', error));
   };
 
 
@@ -45,7 +54,7 @@ const App = () => {
       <h2>Phonebook</h2>
       <Filter filter={filter} setFilter={setFilter}></Filter>
       <h3>Add a new</h3>
-      <PersonForm persons={persons} addPerson={addPerson}></PersonForm>
+      <PersonForm persons={persons} addPerson={addPerson} updateNumber={updateNumber}></PersonForm>
       <h3>Numbers</h3>
       <Persons persons={persons} filter={filter} deletePerson={deletePerson}></Persons>
     </div>

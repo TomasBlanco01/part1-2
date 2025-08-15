@@ -12,20 +12,27 @@ const PersonForm = ({ persons, addPerson }) => {
             setNewNumber('')
             return
         }
-        if (persons.some((person) => (person.name.toLowerCase() === newName.toLowerCase()))) {
-            alert(`${newName} is already added to phonebook`)
-            setNewName('')
-            return
-        }
-        if (persons.some((person) => (person.number === newNumber))) {
-            alert(`${newNumber} is already added to phonebook`)
-            setNewNumber('')
+
+        const existingPerson = persons.find(
+            person => person.name.toLowerCase() === newName.toLowerCase()
+        )
+
+        if (existingPerson) {
+            if (existingPerson.number !== newNumber){
+                if (window.confirm(`${existingPerson.name} is already added to phonebook, replace the old number with a new one?`)){
+                    updateNumber(existingPerson.id, newNumber)
+                }
+            } else {
+                alert(`${existingPerson.name} is already in the phonebook with the same number`)
+            }
             return
         }
         addPerson({ name: newName, number: newNumber })
         setNewName('')
         setNewNumber('')
     }
+
+    const updateNumber = () => {}
 
     const handleName = (event) => {
         setNewName(event.target.value)
