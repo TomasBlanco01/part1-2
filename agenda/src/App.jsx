@@ -2,27 +2,14 @@ import { useState, useEffect } from 'react'
 import Persons from './Persons'
 import Filter from './Filter'
 import PersonForm from './PersonForm'
-import axios from 'axios';
-
+import noteService from './services/persons'
 
 const App = () => {
 
   const [persons, setPersons] = useState([])
 
-  /*useEffect(() => {
-    const xhttp = new XMLHttpRequest()
-    xhttp.onreadystatechange = function () {
-      if (this.readyState === 4 && this.status === 200) {
-        const data = JSON.parse(this.responseText)
-        setPersons(data.persons) // Guardar lo que trae en el estado
-      }
-    }
-    xhttp.open('GET', '/persons.json', true)
-    xhttp.send()
-  }, [])*/
-
   useEffect(() => {
-  axios.get('http://localhost:3001/persons')
+    noteService.getAll()
     .then(response => setPersons(response.data))
     .catch(error => console.error('Error fetching persons:', error));
 }, []);
@@ -37,9 +24,17 @@ const App = () => {
     const newId = getNextId(persons);
     const personWithId = { ...newPerson, id: newId };
 
-    axios.post('http://localhost:3001/persons', personWithId)
+    noteService.create(personWithId)
       .then(response => setPersons(persons.concat(response.data)))
       .catch(error => console.error('Error adding person:', error));
+  };
+
+  const deletePerson = (personId, personName) => {
+    if (window.confirm(`Delete ${personName} ?`)) {
+    noteService.remove(personId)
+      .then(response => setPersons(persons.filter(p => p.id !== personId)))
+      .catch(error => console.error('Error deleting person:', error));
+    }
   };
 
 
@@ -52,7 +47,7 @@ const App = () => {
       <h3>Add a new</h3>
       <PersonForm persons={persons} addPerson={addPerson}></PersonForm>
       <h3>Numbers</h3>
-      <Persons persons={persons} filter={filter}></Persons>
+      <Persons persons={persons} filter={filter} deletePerson={deletePerson}></Persons>
     </div>
   )
 }
