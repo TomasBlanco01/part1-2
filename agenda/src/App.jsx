@@ -3,6 +3,10 @@ import Persons from './Persons'
 import Filter from './Filter'
 import PersonForm from './PersonForm'
 import noteService from './services/persons'
+import '@fontsource/roboto/300.css';
+import '@fontsource/roboto/400.css';
+import '@fontsource/roboto/500.css';
+import '@fontsource/roboto/700.css';
 
 const App = () => {
 
@@ -15,7 +19,7 @@ const App = () => {
 }, []);
 
   const getNextId = (persons) => {
-    if (persons.length === 0) return 1; // si no hay nadie todavía
+    if (persons.length === 0) return 1;
     const ids = persons.map(p => p.id);
     return Math.max(...ids) + 1;
   };
@@ -46,16 +50,12 @@ const App = () => {
       .catch(error => console.error('Error updating person:', error));
   };
 
-
   const [filter, setFilter] = useState('')
 
   return (
     <div>
-      <h2>Phonebook</h2>
       <Filter filter={filter} setFilter={setFilter}></Filter>
-      <h3>Add a new</h3>
       <PersonForm persons={persons} addPerson={addPerson} updateNumber={updateNumber}></PersonForm>
-      <h3>Numbers</h3>
       <Persons persons={persons} filter={filter} deletePerson={deletePerson}></Persons>
     </div>
   )
